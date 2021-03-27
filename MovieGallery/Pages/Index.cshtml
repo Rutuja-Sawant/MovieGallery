@@ -2,9 +2,128 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    
+    
 }
+<head>
+  
+       
+</head>
+<body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+    <div style="background-color: white">
+        <h1 class="text-center" style="background-color: darkred; color: yellow; "> Movie Gallery</h1>
+
+    </div>
+
+    <img src="\images\movieGallery.JPG" width="100%" height="400" alt="movieGallery" />
+
+    <h1 class="text-center" style=" padding-top: 40px;"> What can we do for you today?</h1>
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-interval="100">
+                <img src="\images\someonegreat.jpg" width="1200" height="400" alt="LuxuyHomes">
+
+            </div>
+            <div class="carousel-item" data-interval="100">
+                <img src=".\images\godfather.jpg" width="1200" height="400" alt="Family Home">
+
+            </div>
+            <div class="carousel-item" data-interval="100">
+                <img src="\images\hugo.jpg" width="1200" height="400" alt="Rentals">
+
+            </div>
+            <div class="carousel-item" data-interval="100">
+                <img src="\images\avengers.jpg" width="1200" height="400" alt="Salary Builder">
+
+            </div>
+            <div class="carousel-item" data-interval="100">
+                <img src="\images\lionking.jpg" width="1200" height="400" alt="Salary Builder">
+
+            </div>
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" style="background-color:black" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" style="background-color:black" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+
+
+
+
+
+
+
+    <h2 class="text-center">Testimonial</h2>
+    <div class="row" style="padding-bottom: 40px;">
+
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body" width="10%">
+                    <h4 class="card-title">New York Times</h4>
+                    <p class="card-text">We are the 5th most trusted company for real estate in the United States of America and also the most popular choice for rental houses as per NY Times</p>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card">
+
+                <div class="card-body" width="20%">
+                    <h4 class="card-title">Feature Magazine</h4>
+                    <p class="card-text">Awarded the "No. 1 in family homes" award for the year of 2019-2022 by the the Feature magazine which happens to be amongst the Top 3 most read magazines </p>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+
+                <div class="card-body" width="20%">
+                    <h4 class="card-title">Our client-Amy & Rahul</h4>
+                    <p class="card-text">Their agent was so helpful and gave us virtual tours of the houses according to and in no time we had it. We will definitely recommend Easy Homes to everyone</p>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <form action="/action_page.php" style="background-color:lightgray">
+        <p>Easy Homes will help you find your dream property. Our Real Estate Experts will assist you in property buying process.</p>
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email">
+        <br />
+        <label for="number">Enter your contact number:</label>
+        <input type="number" id="number" name="number">
+        <br />
+        <input type="submit">
+    </form>
+
+
+
+</body>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace MovieGallery.Pages
 {
@@ -19,7 +20,11 @@ namespace MovieGallery.Pages
 
         public void OnGet()
         {
-
+                // using var webClient = new WebClient())
+                //{
+                //webClient.DownloadString("")
+                //var welcome = Welcome.FromJson(jsonString);
+                //}
         }
     }
 }
