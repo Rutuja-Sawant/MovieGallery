@@ -24,8 +24,8 @@
 
 ## Data Feeds  
 
-- Movies Data: https://www.kaggle.com/sankha1998/collaborative-movie-recommendation-system?select=movie.csv
-- Ratings Data: https://www.kaggle.com/sankha1998/collaborative-movie-recommendation-system?select=rating.csv
+- Movies Data: https://github.com/Rutuja-Sawant/MovieGallery/blob/master/MovieGallery/wwwroot/data/Movies.json
+- Shows Data: https://github.com/Rutuja-Sawant/MovieGallery/blob/master/MovieGallery/wwwroot/data/Shows.json
 ---  
 
 ## Functional Requirements  
