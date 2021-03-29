@@ -5,9 +5,9 @@
 
  ##### Team Composition  
 
- -Rutuja Sawant
- -Mohini Chakravarty  
- -Gaytri Khatwani
+ -Rutuja Sawant    
+ -Mohini Chakravarty     
+ -Gaytri Khatwani   
 
  Meeting Time: 10 AM to 1 PM on Mondays and Fridays (Hybrid)  
 
@@ -24,8 +24,8 @@
 
 ## Data Feeds  
 
-- Movies Data: https://github.com/Rutuja-Sawant/MovieGallery/blob/master/MovieGallery/wwwroot/data/Movies.json
-- Shows Data: https://github.com/Rutuja-Sawant/MovieGallery/blob/master/MovieGallery/wwwroot/data/Shows.json
+- IMDb top 250 movies Data: https://imdb-api.com/en/API/Top250Movies/k_81ggrpaf   
+- IMDb top 250 shows Data: https://imdb-api.com/en/API/Top250TVs/k_81ggrpaf
 ---  
 
 ## Functional Requirements  
