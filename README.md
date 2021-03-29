@@ -15,11 +15,10 @@
 
  ## Introduction  
 
- Do you want to find out what is the average rating of your favourite genre? Let us do it.
+ Do you want to find out which movies and shows have the top ratings? Let us do it.
 
--	Find out the ratings for movie titles  
--	Find out the average ratings for different movie genres 
--	Search by movie titles and movie genres
+-	Find out the movie and shows launched in a particular year
+-	Find out the movies and shows having a certain rating
 
 ---  
 
@@ -33,10 +32,10 @@
 
 #### Requirement 1.1  
 
-Scenario:  A user would be able to find which movie title had what ratings  
+Scenario:  A user would be able to find all the movies and shows launched in a particular year 
 
 #### Requirement 1.2  
 
-Scenario:  A user would be able to search the average ratings for different movie genres 
+Scenario:  A user would be able to find all movies and shows having a particular rating
 
 ---
