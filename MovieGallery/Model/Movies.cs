@@ -82,7 +82,7 @@
         {
             if (reader.TokenType == JsonToken.Null) return null;
             var value = serializer.Deserialize<string>(reader);
-            if (Int64.TryParse(value, out long l))
+            if (long.TryParse(value, out long l))
             {
                 return l;
             }
