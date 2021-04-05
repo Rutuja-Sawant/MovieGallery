@@ -1,7 +1,7 @@
 ﻿@page
 @model MovieGallery.Pages.SearchModel
 @{
-    ViewData["Title"] = "Search by year";
+    ViewData["Title"] = "Search";
 }
 
 <h2> Search your favourite movies and shows</h2>
@@ -14,7 +14,7 @@
                     <div class="search">
                         <i class="fa fa-search"></i>
                         <input type="text" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
-                        <button type="submit" class="btn btn-secondary">Search by Year</button>
+                        <button type="submit" class="btn btn-secondary">Search</button>
                     </div>
                 </div>
             </div>
@@ -105,63 +105,76 @@
 
 else
 {
-    if (Model.SearchCompleted)
+    if (Model.CorrectYear)
     {
-        <table class="table table-striped table-light">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Title</th>
-                    <th>Crew</th>
-                    <th>IMDb Rating</th>
-                    @*<th>image</th>*@
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var movie in Model.MoviesResult.Items)
-                {
-
+        if (Model.SearchCompleted)
+        {
+            <table class="table table-striped table-light">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@movie.FullTitle</td>
-                        <td>@movie.Crew</td>
-                        <td>@movie.ImDbRating</td>
-                        <td>@movie.Type</td>
-                        @*<td>@movie.Image</td>*@
+                        <th>Title</th>
+                        <th>Crew</th>
+                        <th>IMDb Rating</th>
+                        @*<th>image</th>*@
+                        <th>Type</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        <table class="table table-striped table-light">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Title</th>
-                    <th>Crew</th>
-                    <th>IMDb Rating</th>
-                    @*<th>image</th>*@
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var show in Model.ShowsResult.Items)
-                {
+                </thead>
+                <tbody>
+                    @foreach (var movie in Model.MoviesResult.Items)
+                    {
 
+                        <tr>
+                            <td>@movie.FullTitle</td>
+                            <td>@movie.Crew</td>
+                            <td>@movie.ImDbRating</td>
+                            <td>@movie.Type</td>
+                            @*<td>@movie.Image</td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <table class="table table-striped table-light">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@show.FullTitle</td>
-                        <td>@show.Crew</td>
-                        <td>@show.ImDbRating</td>
-                        <td>@show.Type</td>
-                        @*<td>@movie.Image</td>*@
+                        <th>Title</th>
+                        <th>Crew</th>
+                        <th>IMDb Rating</th>
+                        @*<th>image</th>*@
+                        <th>Type</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var show in Model.ShowsResult.Items)
+                    {
+
+                        <tr>
+                            <td>@show.FullTitle</td>
+                            <td>@show.Crew</td>
+                            <td>@show.ImDbRating</td>
+                            <td>@show.Type</td>
+                            @*<td>@movie.Image</td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-info">
+                        No Data Present for this year
+                    </div>
+                </div>
+            </div>
+        }
     }
     else
     {
         <div class="row">
             <div class="col">
                 <div class="alert alert-info">
-                    No Data Present for this year
+                    Please enter a valid year!
                 </div>
             </div>
         </div>

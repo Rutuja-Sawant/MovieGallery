@@ -13,6 +13,7 @@ namespace MovieGallery.Pages
         public bool InitialCheckList { get; set; }
         public string Query { get; set; }
         public bool SearchCompleted { get; set; }
+        public bool CorrectYear { get; set; }
 
         public Movies MoviesResult = new Movies();
         public Movies MoviesJson { get; set; }
@@ -22,6 +23,7 @@ namespace MovieGallery.Pages
 
         public void OnGet(string SearchbyYear)
         {
+            string currentYear = DateTime.Now.Year.ToString();
             using (StreamReader r = new StreamReader("Movies.json"))
             {
                 string json = r.ReadToEnd();
@@ -44,28 +46,36 @@ namespace MovieGallery.Pages
             {
                 Query = SearchbyYear;
                 long inputYear = Convert.ToInt64(Query);
-
-                var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
-                MoviesResult = new Movies()
+                if (inputYear > 100 && inputYear <= Convert.ToInt64(currentYear))
                 {
-                    Items = result
-                };
+                    var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
+                    MoviesResult = new Movies()
+                    {
+                        Items = result
+                    };
 
-                var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
-                ShowsResult = new Shows()
-                {
-                    Items = resultShow
-                };
+                    var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
+                    ShowsResult = new Shows()
+                    {
+                        Items = resultShow
+                    };
 
-                if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
-                {
-                    SearchCompleted = true;
+                    if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
+                    {
+                        SearchCompleted = true;
+                        CorrectYear = true;
+                    }
+                    else
+                    {
+                        SearchCompleted = false;
+                        CorrectYear = true;
+                        MoviesResult = new Movies();
+                        ShowsResult = new Shows();
+                    }
                 }
                 else
                 {
-                    SearchCompleted = false;
-                    MoviesResult = new Movies();
-                    ShowsResult = new Shows();
+                    CorrectYear = false;
                 }
             }
         }
