@@ -13,8 +13,8 @@
                 <div class="col-md-12">
                     <div class="search">
                         <i class="fa fa-search"></i>
-                        <input type="text" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
-                        <button type="submit" class="btn btn-secondary">Search by Year</button>
+                        <input type="text" maxlength="4" pattern="\d*" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
+                        <button type="submit" name="searchbutton" class="btn btn-secondary">Search by Year</button>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,9 @@
 
 @if (Model.InitialCheckList)
 {
-
+    <div class="alert alert-info">
+        <p>Please provide a year to narrow your search</p>
+    </div>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="movies">
