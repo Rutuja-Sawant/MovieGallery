@@ -22,52 +22,60 @@ namespace MovieGallery.Pages
 
         public void OnGet(string SearchbyYear)
         {
-            using (StreamReader r = new StreamReader("Movies.json"))
+            try
             {
-                string json = r.ReadToEnd();
-                MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
-            }
-
-            using (StreamReader r = new StreamReader("Shows.json"))
-            {
-                string json = r.ReadToEnd();
-                ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
-            }
-
-            if (SearchbyYear == null)
-            {
-                InitialCheckList = true;
-                MoviesResult = MoviesJson;
-                ShowsResult = ShowsJson;
-            }
-            else
-            {
-                Query = SearchbyYear;
-                long inputYear = Convert.ToInt64(Query);
-
-                var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
-                MoviesResult = new Movies()
+                using (StreamReader r = new StreamReader("Movies.json"))
                 {
-                    Items = result
-                };
+                    string json = r.ReadToEnd();
+                    MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
+                }
 
-                var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
-                ShowsResult = new Shows()
+                using (StreamReader r = new StreamReader("Shows.json"))
                 {
-                    Items = resultShow
-                };
+                    string json = r.ReadToEnd();
+                    ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
+                }
 
-                if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
+                if (SearchbyYear == null)
                 {
-                    SearchCompleted = true;
+                    InitialCheckList = true;
+                    MoviesResult = MoviesJson;
+                    ShowsResult = ShowsJson;
                 }
                 else
                 {
-                    SearchCompleted = false;
-                    MoviesResult = new Movies();
-                    ShowsResult = new Shows();
+                    Query = SearchbyYear;
+                    long inputYear = Convert.ToInt64(Query);
+
+                    var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
+                    MoviesResult = new Movies()
+                    {
+                        Items = result
+                    };
+
+                    var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
+                    ShowsResult = new Shows()
+                    {
+                        Items = resultShow
+                    };
+
+                    if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
+                    {
+                        SearchCompleted = true;
+                    }
+                    else
+                    {
+                        SearchCompleted = false;
+                        MoviesResult = new Movies();
+                        ShowsResult = new Shows();
+                    }
                 }
             }
+            catch
+            {
+                Console.WriteLine("An exception occured while execution");
+            }
         }
+
     }
 }
