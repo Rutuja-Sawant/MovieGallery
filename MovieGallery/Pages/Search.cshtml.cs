@@ -26,14 +26,14 @@ namespace MovieGallery.Pages
             string currentYear = DateTime.Now.Year.ToString();
             using (StreamReader r = new StreamReader("Movies.json"))
             {
-                string json = r.ReadToEnd();
-                MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
+                string ReadMoviejson = r.ReadToEnd();
+                MoviesJson = JsonConvert.DeserializeObject<Movies>(ReadMoviejson);
             }
 
             using (StreamReader r = new StreamReader("Shows.json"))
             {
-                string json = r.ReadToEnd();
-                ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
+                string ReadShowjson = r.ReadToEnd();
+                ShowsJson = JsonConvert.DeserializeObject<Shows>(ReadShowjson);
             }
 
             if (SearchbyYear == null)
@@ -46,7 +46,7 @@ namespace MovieGallery.Pages
             {
                 Query = SearchbyYear;
                 long inputYear = Convert.ToInt64(Query);
-                if (inputYear > 100 && inputYear <= Convert.ToInt64(currentYear))
+                if (inputYear > 1000 && inputYear <= Convert.ToInt64(currentYear))
                 {
                     var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
                     MoviesResult = new Movies()
