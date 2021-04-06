@@ -11,7 +11,7 @@ namespace MovieGallery.Pages
     public class SearchModel : PageModel
     {
         public bool InitialCheckList { get; set; }
-        public string Query { get; set; }
+       
         public bool SearchCompleted { get; set; }
 
         public Movies MoviesResult = new Movies();
@@ -20,7 +20,29 @@ namespace MovieGallery.Pages
         public Shows ShowsResult = new Shows();
         public Shows ShowsJson { get; set; }
 
-        public void OnGet(string SearchbyYear)
+
+
+        public void OnGet()
+        {
+            using (StreamReader r = new StreamReader("Movies.json"))
+            {
+                string json = r.ReadToEnd();
+                MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
+            }
+
+            using (StreamReader r = new StreamReader("Shows.json"))
+            {
+                string json = r.ReadToEnd();
+                ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
+            }
+
+            InitialCheckList = true;
+            MoviesResult = MoviesJson;
+            ShowsResult = ShowsJson;
+
+        }
+
+        public void OnPost(long? SearchbyYear)
         {
             try
             {
@@ -44,16 +66,14 @@ namespace MovieGallery.Pages
                 }
                 else
                 {
-                    Query = SearchbyYear;
-                    long inputYear = Convert.ToInt64(Query);
 
-                    var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
+                    var result = MoviesJson.Items.Where(x => x.Year == SearchbyYear).ToList();
                     MoviesResult = new Movies()
                     {
                         Items = result
                     };
 
-                    var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
+                    var resultShow = ShowsJson.Items.Where(x => x.Year == SearchbyYear).ToList();
                     ShowsResult = new Shows()
                     {
                         Items = resultShow
