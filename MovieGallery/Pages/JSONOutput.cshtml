@@ -1,0 +1,8 @@
+﻿@page
+@model MovieGallery.Pages.JSONOutputModel
+@{
+    ViewData["Title"] = "JSONOutput";
+}
+<h1>IMDb top 250 movies and shows</h1>
+<h5>The API would return the JSON output of movies from your year of choice</h5>
+<p>This URL will return movies from the year 1994: <a asp-page="/jsonoutput" asp-route-year="1994">IMDb highest rated movies in 1994 </a></p>
