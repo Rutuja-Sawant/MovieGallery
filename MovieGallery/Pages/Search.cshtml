@@ -1,11 +1,10 @@
 ﻿@page
 @model MovieGallery.Pages.SearchModel
 @{
-    ViewData["Title"] = "Search by year";
+    ViewData["Title"] = "Search";
 }
 
 <h2> Search your favourite movies and shows</h2>
-
 <div class="container">
     <div class="row mb-3">
         <form class="height d-flex justify-content-center align-items-center form-inline" action="" method="post">
@@ -14,7 +13,7 @@
                     <div class="search">
                         <i class="fa fa-search"></i>
                         <input type="text" maxlength="4" pattern="\d*" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
-                        <button type="submit" name="searchbutton" class="btn btn-secondary">Search by Year</button>
+                        <button type="submit" name="searchbutton" class="btn btn-secondary">Search</button>
                     </div>
                 </div>
             </div>
@@ -24,9 +23,6 @@
 
 @if (Model.InitialCheckList)
 {
-    <div class="alert alert-info">
-        <p>Please provide a year to narrow your search</p>
-    </div>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="movies">
@@ -44,7 +40,6 @@
                                 <th>Title</th>
                                 <th>Crew</th>
                                 <th>IMDb Rating</th>
-                                @*<th>image</th>*@
                                 <th>Year</th>
                             </tr>
                         </thead>
@@ -57,7 +52,6 @@
                                     <td>@movie.Crew</td>
                                     <td>@movie.ImDbRating</td>
                                     <td>@movie.Year</td>
-                                    @*<td>@movie.Image</td>*@
                                 </tr>
                             }
                         </tbody>
@@ -81,20 +75,17 @@
                                 <th>Title</th>
                                 <th>Crew</th>
                                 <th>IMDb Rating</th>
-                                @*<th>image</th>*@
                                 <th>Year</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var show in Model.ShowsResult.Items)
                             {
-
                                 <tr>
                                     <td>@show.Title</td>
                                     <td>@show.Crew</td>
                                     <td>@show.ImDbRating</td>
                                     <td>@show.Year</td>
-                                    @*<td>@movie.Image</td>*@
                                 </tr>
                             }
                         </tbody>
@@ -115,20 +106,17 @@ else
                     <th>Title</th>
                     <th>Crew</th>
                     <th>IMDb Rating</th>
-                    @*<th>image</th>*@
                     <th>Type</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var movie in Model.MoviesResult.Items)
                 {
-
                     <tr>
                         <td>@movie.FullTitle</td>
                         <td>@movie.Crew</td>
                         <td>@movie.ImDbRating</td>
                         <td>@movie.Type</td>
-                        @*<td>@movie.Image</td>*@
                     </tr>
                 }
             </tbody>
@@ -139,7 +127,6 @@ else
                     <th>Title</th>
                     <th>Crew</th>
                     <th>IMDb Rating</th>
-                    @*<th>image</th>*@
                     <th>Type</th>
                 </tr>
             </thead>
@@ -152,7 +139,6 @@ else
                         <td>@show.Crew</td>
                         <td>@show.ImDbRating</td>
                         <td>@show.Type</td>
-                        @*<td>@movie.Image</td>*@
                     </tr>
                 }
             </tbody>

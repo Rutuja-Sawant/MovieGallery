@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MovieGallery.Model;
-using MovieGallery.Movie.Model;
+using Microsoft.Extensions.Logging;
+using MovieGallery.Model.Movies;
+using MovieGallery.Model.Shows;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -10,70 +11,51 @@ namespace MovieGallery.Pages
 {
     public class SearchModel : PageModel
     {
+        private readonly ILogger<SearchModel> _logger;
+
+        public SearchModel(ILogger<SearchModel> logger)
+        {
+            _logger = logger;
+        }
+
         public bool InitialCheckList { get; set; }
-       
+
         public bool SearchCompleted { get; set; }
 
-        public Movies MoviesResult = new Movies();
-        public Movies MoviesJson { get; set; }
+        public Movies MoviesResult { get; set; }
 
-        public Shows ShowsResult = new Shows();
-        public Shows ShowsJson { get; set; }
-
-
+        public Shows ShowsResult { get; set; }
 
         public void OnGet()
         {
-            using (StreamReader r = new StreamReader("Movies.json"))
+            try
             {
-                string json = r.ReadToEnd();
-                MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
+                ReadDataFiles();
+                InitialCheckList = true;
             }
-
-            using (StreamReader r = new StreamReader("Shows.json"))
+            catch (Exception ex)
             {
-                string json = r.ReadToEnd();
-                ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
+                _logger.LogError($"Exception occured on OnGet Search {ex}");
             }
-
-            InitialCheckList = true;
-            MoviesResult = MoviesJson;
-            ShowsResult = ShowsJson;
-
         }
 
         public void OnPost(long? SearchbyYear)
         {
             try
             {
-                using (StreamReader r = new StreamReader("Movies.json"))
-                {
-                    string json = r.ReadToEnd();
-                    MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
-                }
-
-                using (StreamReader r = new StreamReader("Shows.json"))
-                {
-                    string json = r.ReadToEnd();
-                    ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
-                }
+                ReadDataFiles();
 
                 if (SearchbyYear == null)
-                {
                     InitialCheckList = true;
-                    MoviesResult = MoviesJson;
-                    ShowsResult = ShowsJson;
-                }
                 else
                 {
-
-                    var result = MoviesJson.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    var result = MoviesResult.Items.Where(x => x.Year == SearchbyYear).ToList();
                     MoviesResult = new Movies()
                     {
                         Items = result
                     };
 
-                    var resultShow = ShowsJson.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    var resultShow = ShowsResult.Items.Where(x => x.Year == SearchbyYear).ToList();
                     ShowsResult = new Shows()
                     {
                         Items = resultShow
@@ -91,11 +73,25 @@ namespace MovieGallery.Pages
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Console.WriteLine("An exception occured while execution");
+                _logger.LogError($"Exception occured on OnPost Search for year {SearchbyYear}: {ex}");
             }
         }
 
+        private void ReadDataFiles()
+        {
+            using (StreamReader r = new StreamReader("Movies.json"))
+            {
+                string json = r.ReadToEnd();
+                MoviesResult = JsonConvert.DeserializeObject<Movies>(json);
+            }
+
+            using (StreamReader r = new StreamReader("Shows.json"))
+            {
+                string json = r.ReadToEnd();
+                ShowsResult = JsonConvert.DeserializeObject<Shows>(json);
+            }
+        }
     }
 }

@@ -10,10 +10,7 @@ namespace MovieGallery.Pages
     {
         private readonly ILogger<LaureatesModel> _logger;
 
-        public LaureatesModel(ILogger<LaureatesModel> logger)
-        {
-            _logger = logger;
-        }
+        public LaureatesModel(ILogger<LaureatesModel> logger) => _logger = logger;
 
         public void OnGet()
         {
@@ -29,7 +26,7 @@ namespace MovieGallery.Pages
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception occured on calling Nobel Laureates endpoint {ex}");
+                _logger.LogError($"Exception occured on calling Nobel Laureates get endpoint {ex}");
             }
         }
     }
