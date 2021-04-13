@@ -1,61 +1,35 @@
 ﻿@page
 @model MovieGallery.Pages.LaureatesModel
 @{
-    List<QuickType.Laureate>
-    laureate1 = (List<QuickType.Laureate>
-        )ViewData["Laureates"];
-
-    <table class="table table-striped table-light">
-        <thead class="thead-dark">
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Born City</th>
-                <th>Date of Birth</th>
-                <th>Gender</th>
-                <th>Year of Winning</th>
-                <th>Category</th>
-                <th>Share</th>
-            </tr>
-        </thead>
-
-
-
-        <tbody>
-
-
-
-            @{ foreach (var laureate2 in laureate1)
-                {
-                    int i = 0;
-                    <tr>
-                        <td>@laureate2.Firstname</td>
-                        <td>@laureate2.Surname</td>
-                        <td>@laureate2.BornCity</td>
-                        <td>@laureate2.Born</td>
-                        <td>@laureate2.Gender</td>
-
-
-
-                        @foreach (var prizes in laureate2.Prizes)
-                        {
-                            @if (i == 0)
-                            {
-
-
-
-                                <td>@prizes.Year</td>
-                                <td>@prizes.Category</td>
-                                <td>@prizes.Share</td>
-                                i = i + 1;
-                            }}
-
-
-
-
-                    </tr>
-                } }
-        </tbody>
-    </table> }
+    ViewData["Title"] = "Laureates";
+    List<MovieGallery.Laureate> laureates = (List<MovieGallery.Laureate>)ViewData["Laureates"];
 }
+<h3>Nobel Laureates from India</h3>
+<table class="table table-striped table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Born City</th>
+            <th>Date of Birth</th>
+            <th>Year of Winning</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ foreach (var laureate in laureates)
+            {
+                <tr>
+                    <td>@laureate.Firstname</td>
+                    <td>@laureate.Surname</td>
+                    <td>@laureate.BornCity</td>
+                    <td>@laureate.Born</td>
 
+                    @foreach (var prizes in laureate.Prizes)
+                    {
+                        <td>@prizes.Year</td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

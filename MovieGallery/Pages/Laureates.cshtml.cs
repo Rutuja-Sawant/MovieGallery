@@ -1,23 +1,35 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net;
 
 namespace MovieGallery.Pages
 {
     public class LaureatesModel : PageModel
     {
+        private readonly ILogger<LaureatesModel> _logger;
+
+        public LaureatesModel(ILogger<LaureatesModel> logger)
+        {
+            _logger = logger;
+        }
+
         public void OnGet()
         {
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                IDictionary<long, QuickType.Laureates> allNobels = new Dictionary<long, QuickType.Laureates>();
-                string nobelJSON = webClient.DownloadString("http://api.nobelprize.org/v1/laureate.json");
-                QuickType.Laureates nobel = QuickType.Laureates.FromJson(nobelJSON);
-                List<QuickType.Laureate> laureate1 = nobel.NobleLaureates;
-                ViewData["Laureates"] = laureate1;
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = webClient.DownloadString("https://themodernilluminati.azurewebsites.net/ExposeApi?country=IN");
+                    var laureates = Laureates.FromJson(response);
+                    List<MovieGallery.Laureate> laureate = laureates.NobleLaureates;
+                    ViewData["Laureates"] = laureate;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception occured on calling Nobel Laureates endpoint {ex}");
             }
         }
     }
