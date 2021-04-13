@@ -8,13 +8,13 @@
 
 <div class="container">
     <div class="row mb-3">
-        <form class="height d-flex justify-content-center align-items-center form-inline" action="" method="get">
+        <form class="height d-flex justify-content-center align-items-center form-inline" action="" method="post">
             <div>
                 <div class="col-md-12">
                     <div class="search">
                         <i class="fa fa-search"></i>
-                        <input type="text" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
-                        <button type="submit" class="btn btn-secondary">Search by Year</button>
+                        <input type="text" maxlength="4" pattern="\d*" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
+                        <button type="submit" name="searchbutton" class="btn btn-secondary">Search by Year</button>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,9 @@
 
 @if (Model.InitialCheckList)
 {
-
+    <div class="alert alert-info">
+        <p>Please provide a year to narrow your search</p>
+    </div>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="movies">
@@ -71,7 +73,7 @@
                     </button>
                 </h5>
             </div>
-            <div id="collapseShows" class="collapse" aria-labelledby="movies" data-parent="#accordion">
+            <div id="collapseShows" class="collapse" aria-labelledby="shows" data-parent="#accordion">
                 <div class="card-body">
                     <table class="table table-striped table-light">
                         <thead class="thead-dark">

@@ -11,7 +11,7 @@ namespace MovieGallery.Pages
     public class SearchModel : PageModel
     {
         public bool InitialCheckList { get; set; }
-        public string Query { get; set; }
+       
         public bool SearchCompleted { get; set; }
 
         public Movies MoviesResult = new Movies();
@@ -20,7 +20,9 @@ namespace MovieGallery.Pages
         public Shows ShowsResult = new Shows();
         public Shows ShowsJson { get; set; }
 
-        public void OnGet(string SearchbyYear)
+
+
+        public void OnGet()
         {
             using (StreamReader r = new StreamReader("Movies.json"))
             {
@@ -34,40 +36,66 @@ namespace MovieGallery.Pages
                 ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
             }
 
-            if (SearchbyYear == null)
+            InitialCheckList = true;
+            MoviesResult = MoviesJson;
+            ShowsResult = ShowsJson;
+
+        }
+
+        public void OnPost(long? SearchbyYear)
+        {
+            try
             {
-                InitialCheckList = true;
-                MoviesResult = MoviesJson;
-                ShowsResult = ShowsJson;
-            }
-            else
-            {
-                Query = SearchbyYear;
-                long inputYear = Convert.ToInt64(Query);
-
-                var result = MoviesJson.Items.Where(x => x.Year == inputYear).ToList();
-                MoviesResult = new Movies()
+                using (StreamReader r = new StreamReader("Movies.json"))
                 {
-                    Items = result
-                };
+                    string json = r.ReadToEnd();
+                    MoviesJson = JsonConvert.DeserializeObject<Movies>(json);
+                }
 
-                var resultShow = ShowsJson.Items.Where(x => x.Year == inputYear).ToList();
-                ShowsResult = new Shows()
+                using (StreamReader r = new StreamReader("Shows.json"))
                 {
-                    Items = resultShow
-                };
+                    string json = r.ReadToEnd();
+                    ShowsJson = JsonConvert.DeserializeObject<Shows>(json);
+                }
 
-                if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
+                if (SearchbyYear == null)
                 {
-                    SearchCompleted = true;
+                    InitialCheckList = true;
+                    MoviesResult = MoviesJson;
+                    ShowsResult = ShowsJson;
                 }
                 else
                 {
-                    SearchCompleted = false;
-                    MoviesResult = new Movies();
-                    ShowsResult = new Shows();
+
+                    var result = MoviesJson.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    MoviesResult = new Movies()
+                    {
+                        Items = result
+                    };
+
+                    var resultShow = ShowsJson.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    ShowsResult = new Shows()
+                    {
+                        Items = resultShow
+                    };
+
+                    if (MoviesResult.Items.Count > 0 || ShowsResult.Items.Count > 0)
+                    {
+                        SearchCompleted = true;
+                    }
+                    else
+                    {
+                        SearchCompleted = false;
+                        MoviesResult = new Movies();
+                        ShowsResult = new Shows();
+                    }
                 }
             }
+            catch
+            {
+                Console.WriteLine("An exception occured while execution");
+            }
         }
+
     }
 }
