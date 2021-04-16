@@ -20,6 +20,7 @@
         </form>
     </div>
 </div>
+
 <img style="padding:20px" src="\images\Capture13.JPG" width="1120" height="400" alt="movieGallery" />
 
 @if (Model.InitialCheckList)
@@ -42,6 +43,7 @@
                                 <th>Crew</th>
                                 <th>IMDb Rating</th>
                                 <th>Year</th>
+                                <th>Rank</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +55,7 @@
                                     <td>@movie.Crew</td>
                                     <td>@movie.ImDbRating</td>
                                     <td>@movie.Year</td>
+                                    <td>@movie.Rank</td>
                                 </tr>
                             }
                         </tbody>
@@ -77,6 +80,7 @@
                                 <th>Crew</th>
                                 <th>IMDb Rating</th>
                                 <th>Year</th>
+                                <th>Rank</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +91,7 @@
                                     <td>@show.Crew</td>
                                     <td>@show.ImDbRating</td>
                                     <td>@show.Year</td>
+                                    <td>@show.Rank</td>
                                 </tr>
                             }
                         </tbody>
@@ -101,13 +106,15 @@ else
 {
     if (Model.SearchCompleted)
     {
+        if (Model.MoviesResult.Items.Count > 0)
+        {
         <table class="table table-striped table-light">
             <thead class="thead-dark">
                 <tr>
                     <th>Title</th>
                     <th>Crew</th>
                     <th>IMDb Rating</th>
-                    <th>Type</th>
+                    <th>Rank</th>
                 </tr>
             </thead>
             <tbody>
@@ -117,18 +124,28 @@ else
                         <td>@movie.FullTitle</td>
                         <td>@movie.Crew</td>
                         <td>@movie.ImDbRating</td>
-                        <td>@movie.Type</td>
+                        <td>@movie.Rank</td>
                     </tr>
                 }
             </tbody>
         </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                    No Movies Data Present for this year
+             </div>
+        }
+        if (Model.ShowsResult.Items.Count > 0)
+        {
+            <h3>Shows:</h3>
         <table class="table table-striped table-light">
             <thead class="thead-dark">
                 <tr>
                     <th>Title</th>
                     <th>Crew</th>
                     <th>IMDb Rating</th>
-                    <th>Type</th>
+                    <th>Rank</th>
                 </tr>
             </thead>
             <tbody>
@@ -139,11 +156,18 @@ else
                         <td>@show.FullTitle</td>
                         <td>@show.Crew</td>
                         <td>@show.ImDbRating</td>
-                        <td>@show.Type</td>
+                        <td>@show.Rank</td>
                     </tr>
                 }
             </tbody>
         </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No Shows data Present for this year
+            </div>
+        }
     }
     else
     {

@@ -2,10 +2,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MovieGallery.Model.Movies;
 using MovieGallery.Model.Shows;
-using Newtonsoft.Json;
 using System;
-using System.IO;
 using System.Linq;
+using System.Net;
 
 namespace MovieGallery.Pages
 {
@@ -81,16 +80,15 @@ namespace MovieGallery.Pages
 
         private void ReadDataFiles()
         {
-            using (StreamReader r = new StreamReader("Movies.json"))
+            using (WebClient webClient=new WebClient())
             {
-                string json = r.ReadToEnd();
-                MoviesResult = JsonConvert.DeserializeObject<Movies>(json);
+                string moviesJson = webClient.DownloadString("https://imdb-api.com/en/API/Top250Movies/k_81ggrpaf");
+                MoviesResult = Movies.FromJson(moviesJson);
             }
-
-            using (StreamReader r = new StreamReader("Shows.json"))
+            using (WebClient webClient = new WebClient())
             {
-                string json = r.ReadToEnd();
-                ShowsResult = JsonConvert.DeserializeObject<Shows>(json);
+                string showsJson = webClient.DownloadString("https://imdb-api.com/en/API/Top250TVs/k_81ggrpaf");
+                ShowsResult = Shows.FromJson(showsJson);
             }
         }
     }

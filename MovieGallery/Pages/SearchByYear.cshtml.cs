@@ -1,11 +1,10 @@
 using System;
-using System.IO;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MovieGallery.Model.Movies;
-using Newtonsoft.Json;
 
 namespace MovieGallery.Pages
 {
@@ -25,10 +24,10 @@ namespace MovieGallery.Pages
             {
                 year = (year == 0) ? 1994 : year;//if  year entered is null, by default take year=1994
                 Movies response = new Movies();
-                using (StreamReader r = new StreamReader("Movies.json"))
+                using (WebClient webClient = new WebClient())
                 {
-                    string json = r.ReadToEnd();
-                    response = JsonConvert.DeserializeObject<Movies>(json);
+                    string moviesJson = webClient.DownloadString("https://imdb-api.com/en/API/Top250Movies/k_81ggrpaf");
+                    response = Movies.FromJson(moviesJson);
                 }
                 var result = response.Items.Where(x => x.Year == year).ToList();
                 response = new Movies()
