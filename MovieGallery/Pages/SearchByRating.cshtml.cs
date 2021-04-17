@@ -11,15 +11,14 @@ using System.Net;
 
 namespace MovieGallery.Pages
 {
-    public class SearchModel : PageModel
+    public class SearchByRatingModel : PageModel
     {
-        private readonly ILogger<SearchModel> _logger;
+        private readonly ILogger<SearchByRatingModel> _logger;
 
-        public SearchModel(ILogger<SearchModel> logger)
+        public SearchByRatingModel(ILogger<SearchByRatingModel> logger)
         {
             _logger = logger;
         }
-
         public bool InitialCheckList { get; set; }
 
         public bool SearchCompleted { get; set; }
@@ -27,42 +26,40 @@ namespace MovieGallery.Pages
         public Movies MoviesResult { get; set; }
 
         public Shows ShowsResult { get; set; }
-        
+
+       public List<string> RatingsList { get; set; }
+
         public void OnGet()
         {
             try
-            { 
+            {
                 ReadDataFiles();
-                InitialCheckList = true; 
+                InitialCheckList = true;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception occured on OnGet Search {ex}");
+                _logger.LogError($"Exception occured on OnGet Search By Rating {ex}");
             }
         }
 
-        public void OnPost(long? SearchbyYear)
+        public void OnPost()
         {
             try
             {
+                var Rating = Request.Form["rating"];
                 ReadDataFiles();
 
-                if (SearchbyYear == null)
-                {
-                    SearchCompleted = false;
-                    MoviesResult = new Movies();
-                    ShowsResult = new Shows();
-                }
-
+                if (string.IsNullOrEmpty(Rating))
+                    InitialCheckList = true;
                 else
                 {
-                    var result = MoviesResult.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    var result = MoviesResult.Items.Where(x => x.ImDbRating == Rating).ToList();
                     MoviesResult = new Movies()
                     {
                         Items = result
                     };
 
-                    var resultShow = ShowsResult.Items.Where(x => x.Year == SearchbyYear).ToList();
+                    var resultShow = ShowsResult.Items.Where(x => x.ImDbRating == Rating).ToList();
                     ShowsResult = new Shows()
                     {
                         Items = resultShow
@@ -82,13 +79,13 @@ namespace MovieGallery.Pages
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception occured on OnPost Search for year {SearchbyYear}: {ex}");
+                _logger.LogError($"Exception occured on OnPost Search Rating: {ex}");
             }
         }
 
         private void ReadDataFiles()
         {
-            using (WebClient webClient=new WebClient())
+            using (WebClient webClient = new WebClient())
             {
                 string moviesJson = webClient.DownloadString("https://imdb-api.com/en/API/Top250Movies/k_81ggrpaf");
                 MoviesResult = Movies.FromJson(moviesJson);
@@ -98,11 +95,17 @@ namespace MovieGallery.Pages
                 string showsJson = webClient.DownloadString("https://imdb-api.com/en/API/Top250TVs/k_81ggrpaf");
                 ShowsResult = Shows.FromJson(showsJson);
             }
-
-            if(MoviesResult.Items.Count==0 && ShowsResult.Items.Count==0)
+            if (MoviesResult.Items.Count == 0 && ShowsResult.Items.Count == 0)
             {
                 ReadLocalFiles(); //since apis have limit of 100 reads per day
             }
+            RatingsList = new List<string>();
+            foreach (var i in MoviesResult.Items)
+            {
+                RatingsList.Add(i.ImDbRating);
+            }
+            RatingsList= RatingsList.Distinct().ToList();
+            RatingsList = RatingsList.OrderBy(x => x).ToList();
         }
         private void ReadLocalFiles()
         {

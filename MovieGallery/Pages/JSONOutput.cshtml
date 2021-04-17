@@ -3,7 +3,17 @@
 @{
     ViewData["Title"] = "JSONOutput";
 }
-<h1>IMDb top 250 movies and shows</h1>
+<h1>IMDb top 250 movies and shows datasets</h1>
 <img style="padding-top:20px; padding-bottom:20px" src="\images\Capture14.JPG" width="1120" height="400" alt="movieGallery" />
-<h5>The API would return the JSON output of movies from your year of choice</h5>
-<p>This URL will return movies from the year 1994: <a asp-page="/searchbyyear" asp-route-year="1994">IMDb highest rated movies in 1994 </a></p>
+<h6>The API would return the Movies from year of your choice,by default it will result in movies from year 2021 but you can edit the year in url </h6>
+
+<div class="row">
+<div class="col">
+    <div class="alert alert-info">
+        This URL will return movies JSON output from the year 2021: <a target="_blank" asp-page="/searchbyyear" asp-route-year="2021">IMDb highest rated movies in 2021 </a>
+    </div>
+</div>
+</div>
+
+
+

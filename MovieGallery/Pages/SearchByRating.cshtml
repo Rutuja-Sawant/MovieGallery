@@ -1,27 +1,33 @@
 ﻿@page
-@model MovieGallery.Pages.SearchModel
+@model MovieGallery.Pages.SearchByRatingModel
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Search by rating";
 }
-<h2> Search your favourite movies and shows</h2>
+
+<h2> Search your favourite movies and shows by rating</h2>
 
 <div class="container">
     <div class="row mb-3">
         <form class="height d-flex justify-content-center align-items-center form-inline" action="" method="post">
             <div>
                 <div class="col-md-12">
-                    <div class="search">
+                    <div class="searchbyrating">
                         <i class="fa fa-search"></i>
-                        <input type="text" maxlength="4" pattern="\d*" class="form-control" placeholder="Enter year to start search..." name="SearchbyYear" id="SearchbyYear">
-                        <button type="submit" name="searchbutton" class="btn btn-secondary">Search</button>
+
+                        <select name="rating" required class="dropdown1">
+                            <option value="0">Select a Rating</option>
+                            @foreach (var rating in Model.RatingsList)
+                            {
+                                <option value="@rating">@rating</option>
+                            }
+                        </select>
+                        <button type="submit" name="searchrating" class="btn btn-secondary">Search</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-<img style="padding:20px" src="\images\Capture13.JPG" width="1120" height="400" alt="movieGallery" />
 
 @if (Model.InitialCheckList)
 {
@@ -114,7 +120,7 @@ else
                     <tr>
                         <th>Title</th>
                         <th>Crew</th>
-                        <th>IMDb Rating</th>
+                        <th>Year</th>
                         <th>Rank</th>
                     </tr>
                 </thead>
@@ -122,9 +128,9 @@ else
                     @foreach (var movie in Model.MoviesResult.Items)
                     {
                         <tr>
-                            <td>@movie.FullTitle</td>
+                            <td>@movie.Title</td>
                             <td>@movie.Crew</td>
-                            <td>@movie.ImDbRating</td>
+                            <td>@movie.Year</td>
                             <td>@movie.Rank</td>
                         </tr>
                     }
@@ -134,7 +140,7 @@ else
         else
         {
             <div class="alert alert-info">
-                No Movies Data Present for this year
+                No Movies Data Present for this rating
             </div>
         }
         if (Model.ShowsResult.Items.Count > 0)
@@ -145,7 +151,7 @@ else
                     <tr>
                         <th>Title</th>
                         <th>Crew</th>
-                        <th>IMDb Rating</th>
+                        <th>Year</th>
                         <th>Rank</th>
                     </tr>
                 </thead>
@@ -154,9 +160,9 @@ else
                     {
 
                         <tr>
-                            <td>@show.FullTitle</td>
+                            <td>@show.Title</td>
                             <td>@show.Crew</td>
-                            <td>@show.ImDbRating</td>
+                            <td>@show.Year</td>
                             <td>@show.Rank</td>
                         </tr>
                     }
@@ -166,7 +172,7 @@ else
         else
         {
             <div class="alert alert-info">
-                No Shows data Present for this year
+                No Shows data Present for this rating
             </div>
         }
     }
@@ -175,7 +181,7 @@ else
         <div class="row">
             <div class="col">
                 <div class="alert alert-info">
-                    No Data Present for this year
+                    No Data Present for this rating
                 </div>
             </div>
         </div>
