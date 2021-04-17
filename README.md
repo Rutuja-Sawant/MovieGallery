@@ -1,16 +1,16 @@
 
 # The Movie Gallery
 
-## Design Document - The Movie Gallery      
-https://moviegallery20210416202022.azurewebsites.net/
+## Design Document - The Movie Gallery        
+*https://moviegallery20210416202022.azurewebsites.net/*
  --
  ## Team Composition 
  
- -Rutuja Sawant 
- -Mohini Chakravarty    
- -Gaytri Khatwani
+ -Rutuja Sawant    
+ -Mohini Chakravarty       
+ -Gaytri Khatwani   
  
- --
+ --- 
  
  ## Introduction  
 
